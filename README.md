@@ -1,2 +1,2 @@
 # sc-transit
-Using the transit app api to get realtime data from users riding Santa Cruz Metro
+Using the gtfs realtime feed to get realtime data from users riding Santa Cruz Metro
