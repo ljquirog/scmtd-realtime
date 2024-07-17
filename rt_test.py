@@ -14,7 +14,7 @@ target_stop_id = '1551'
 # Find current trip_id that corresponds to stop_id
 
 # Read the GTFS stop_times.txt file
-stop_times_df = pd.read_csv('stop_times.txt')
+stop_times_df = pd.read_csv('gtfs-static/stop_times.txt')
 
 # Ensure the stop_id column is treated as a string
 stop_times_df['stop_id'] = stop_times_df['stop_id'].astype(str)
@@ -43,7 +43,7 @@ closest_trip_id = closest_row['trip_id'].values[0]
 closest_arrival_time = closest_row['arrival_time'].values[0]
 
 # Find & print what stop we're at 
-stops_df = pd.read_csv('stops.txt')
+stops_df = pd.read_csv('gtfs-static/stops.txt')
 
 stops_df['stop_id'] = stops_df['stop_id'].astype(str)
 
