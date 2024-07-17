@@ -96,7 +96,7 @@ results_df = pd.DataFrame(
         'trip_id': [actual_trip_id],
         'stop_id': [target_stop_id],
         'stop_name': [stop_name.iloc[0]],
-        'current_time': [current_time],
+        'current_time': [current_time], # i'll want the date somewhere in here as well
         'closest_arrival_time': [closest_arrival_time],
         'real_arrival_time' : [real_arrival_time]        
     }
@@ -120,3 +120,4 @@ results_csv = 'csv/rte-19.csv'
 # - rename each file per route
 # - how to visualize aggregation
 
+# daily aggregation of all csv files for all routes
