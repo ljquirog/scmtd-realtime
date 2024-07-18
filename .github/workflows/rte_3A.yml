@@ -38,3 +38,12 @@ jobs:
     - name: run main.py
       run: |
         python3 ./main.py 3A 1400 csv/rte_3A.csv
+    - name: commit changes
+      run: |
+        git config user.name "Lola Quiroga"
+        git config user.email "lolaquiroga25@gmail.com"
+        git add csv/rte_3A.csv
+        git commit -m "update rte_3A.csv from github actions"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
