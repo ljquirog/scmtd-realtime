@@ -1,8 +1,9 @@
 from google.transit import gtfs_realtime_pb2
 import requests
-import datetime
+from datetime import datetime
 import pandas as pd
 import os
+
 
 feed = gtfs_realtime_pb2.FeedMessage()
 response = requests.get('https://rt.scmetro.org/gtfsrt/trips')
@@ -29,8 +30,11 @@ filtered_df = stop_times_df.loc[stop_times_df['stop_id'] == target_stop_id].copy
 filtered_df.loc[:, 'arrival_time'] = pd.to_datetime(filtered_df['arrival_time'], format='%H:%M:%S').dt.time
 
 # Get the current time with hours, minutes, and seconds
-current_time = datetime.datetime.now().strftime('%H:%M:%S')
-current_time = datetime.datetime.strptime(current_time, '%H:%M:%S').time()
+current_time = datetime.now().strftime('%H:%M:%S')
+current_time = datetime.strptime(current_time, '%H:%M:%S').time()
+current_date = datetime.today().strftime('%Y-%m-%d')
+
+print(current_time, current_date)
 
 # Function to get the time difference
 def time_diff(t1, t2):
@@ -71,24 +75,27 @@ for entity in feed.entity:
         for stop_time_update in trip_update.stop_time_update:
             # print(stop_time_update.stop_id)
             if stop_time_update.stop_id == target_stop_id:
-                actual_trip_id = trip_update.trip.trip_id
-                print(f"Route ID: {target_route_id}")
-                print(f"Stop ID: {target_stop_id}")
-                print(f"Trip ID: {actual_trip_id}")            
+                actual_trip_id = trip_update.trip.trip_id          
 
                 if stop_time_update.HasField('arrival'):
                     real_arrival_time = stop_time_update.arrival.time
+                    
                     # Convert the Unix timestamp to a datetime object
-                    real_arrival_time = datetime.datetime.fromtimestamp(real_arrival_time)
+                    real_arrival_time = datetime.fromtimestamp(real_arrival_time)
+
                     print(f"Realtime Arrival: {real_arrival_time.strftime('%H:%M:%S')}") # %Y-%m-%d 
                     # print(real_arrival_time.type())
                     print(f"Expected Arrival: {closest_arrival_time}")
-
                 else:
                     print("No departure time available")
 
 # Calculate how late/early the bus was
-diff = time_diff(real_arrival_time, closest_arrival_time)
+diff_seconds = time_diff(real_arrival_time, closest_arrival_time)
+diff_mins = round((diff_seconds/60), 2)
+print(diff_mins)
+
+# isolate time from real_arrival_time
+real_arrival_time = real_arrival_time.time()
 
 results_df = pd.DataFrame(
     {
@@ -96,22 +103,24 @@ results_df = pd.DataFrame(
         'trip_id': [actual_trip_id],
         'stop_id': [target_stop_id],
         'stop_name': [stop_name.iloc[0]],
-        'current_time': [current_time], # i'll want the date somewhere in here as well
         'closest_arrival_time': [closest_arrival_time],
-        'real_arrival_time' : [real_arrival_time]        
+        'real_arrival_time' : [real_arrival_time],
+        'diff_mins' : [diff_mins],
+        'current_time': [current_time], 
+        'current_date': [current_date]
     }
 )
 
 # Define the path to the results CSV file
-results_csv = 'csv/rte-19.csv'
+results_csv = 'csv/rte_19.csv'
 
 # Check if the file exists
-# if os.path.exists(results_csv):
-#     # Append the new data to the existing file without writing the header
-#     results_df.to_csv(results_csv, mode='w', header=False, index=False)
-# else:
-#     # Write the new data to the file, including the header
-#     results_df.to_csv(results_csv, mode='w', header=True, index=False)
+if os.path.exists(results_csv):
+    # Append the new data to the existing file without writing the header
+    results_df.to_csv(results_csv, mode='a', header=False, index=False)
+else:
+    # Write the new data to the file, including the header
+    results_df.to_csv(results_csv, mode='w', header=True, index=False)
 
 # - figure out how i want the data formatted for data collection -- aggregate to a csv file?
     # - look at kyle bcycle data
