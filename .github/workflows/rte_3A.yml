@@ -45,6 +45,7 @@ jobs:
       run: |
         git config user.name "Lola Quiroga"
         git config user.email "lolaquiroga25@gmail.com"
+        git pull
         git add csv/rte_3A.csv
         git commit -m "update rte_3A.csv from github actions"
         git push
