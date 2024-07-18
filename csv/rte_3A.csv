@@ -1,2 +1,3 @@
 route_id,trip_id,stop_id,stop_name,closest_arrival_time,real_arrival_time,diff_mins,current_time,current_date
 3A,1427020,1198,Portola Dr & 18th Ave,10:41:31,10:49:01,7.5,10:28:42,2024-07-18
+3A,143020,1198,Portola Dr & 18th Ave,11:12:50,11:45:17,32.45,11:25:02,2024-07-18

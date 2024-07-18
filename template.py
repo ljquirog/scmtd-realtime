@@ -6,7 +6,6 @@
 # - how to visualize aggregation
 
 # daily aggregation of all csv files for all routes
-
 from google.transit import gtfs_realtime_pb2
 import requests
 from datetime import datetime
