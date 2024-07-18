@@ -27,7 +27,7 @@ jobs:
       run: |
         pip install --upgrade google-api-python-client
         python -m pip install --upgrade pip
-        pip install flake8 pytest gtfs-realtime-bindings
+        pip install flake8 pytest gtfs-realtime-bindings pandas
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
