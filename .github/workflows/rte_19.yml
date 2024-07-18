@@ -36,4 +36,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest
+        pytest --maxfail=0
+    - name: run main.py
+      run: |
+        python3 ./main.py 18 1451 csv/rte_18.csv
