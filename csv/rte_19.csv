@@ -1,0 +1,2 @@
+route_id,trip_id,stop_id,stop_name,closest_arrival_time,real_arrival_time,diff_mins,current_time,current_date
+19,99999,1594,Front & Soquel Ave,21:06:00,99999,99999,21:08:47,2024-07-18
