@@ -1,0 +1,2 @@
+route_id,trip_id,stop_id,stop_name,closest_arrival_time,real_arrival_time,diff_mins,current_time,current_date
+1,1232020,1726,River St S. & Soquel Ave,12:43:00,99999,99999,12:41:14,2024-07-18

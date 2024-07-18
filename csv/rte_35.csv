@@ -1,0 +1,2 @@
+route_id,trip_id,stop_id,stop_name,closest_arrival_time,real_arrival_time,diff_mins,current_time,current_date
+35,457020,1466,Soquel Ave & Front,12:32:00,99999,99999,12:35:11,2024-07-18

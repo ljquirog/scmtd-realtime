@@ -8,7 +8,7 @@
 # daily aggregation of all csv files for all routes
 from google.transit import gtfs_realtime_pb2
 import requests
-from datetime import datetime
+from datetime import datetime, time
 import pandas as pd
 import os
 
@@ -53,6 +53,7 @@ def generate_realtime(target_route_id, target_stop_id):
     # Get the trip_id and arrival_time of the closest row
     closest_trip_id = closest_row['trip_id'].values[0]
     closest_arrival_time = closest_row['arrival_time'].values[0]
+    print(closest_arrival_time)
 
     # Find & print what stop we're at 
     stops_df = pd.read_csv('gtfs-static/stops.txt')
@@ -74,26 +75,30 @@ def generate_realtime(target_route_id, target_stop_id):
         if entity.HasField('trip_update'):
             trip_update = entity.trip_update
             if trip_update.trip.route_id == target_route_id:
+                # print(trip_update)
                 for stop_time_update in trip_update.stop_time_update:
                     if stop_time_update.stop_id == target_stop_id:
                         actual_trip_id = trip_update.trip.trip_id          
                         if stop_time_update.HasField('arrival'):
                             real_arrival_time = stop_time_update.arrival.time
-                            
                             # Convert the Unix timestamp to a datetime object
                             real_arrival_time = datetime.fromtimestamp(real_arrival_time)
-
+                            print(type(real_arrival_time))        
                             print(f"Realtime Arrival: {real_arrival_time.strftime('%H:%M:%S')}") # %Y-%m-%d 
-                            # print(real_arrival_time.type())
+                            real_arrival_time = real_arrival_time.time()
                             print(f"Expected Arrival: {closest_arrival_time}")
                         else:
-                            print("No departure time available")
+                            print("No arrival time available")
+    
+   
     # Calculate how late/early the bus was
-    diff_seconds = time_diff(real_arrival_time, closest_arrival_time)
-    diff_mins = round((diff_seconds/60), 2)
+    if isinstance(real_arrival_time, time) and isinstance(closest_arrival_time, time):
+        diff_seconds = time_diff(real_arrival_time, closest_arrival_time)
+        diff_mins = round((diff_seconds/60), 2)
+        # isolate time from real_arrival_time
+    else:
+        diff_mins = '99999'
 
-    # isolate time from real_arrival_time
-    real_arrival_time = real_arrival_time.time()
     
     results_df = pd.DataFrame(
         {
