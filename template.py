@@ -25,6 +25,7 @@ def time_diff(t1, t2):
     return abs(t1_seconds - t2_seconds)
 
 # Define the specific route_id and stop_id to search for... this varname could be clearer
+# break up this function into smaller/simpler funcs
 def generate_realtime(target_route_id, target_stop_id):
     real_arrival_time = '99999'
     actual_trip_id = '99999'
@@ -69,6 +70,7 @@ def generate_realtime(target_route_id, target_stop_id):
         print(f"No stop name found for stop_id {target_stop_id}")
 
     # iterate through entries in the feed
+    # this could be faster!!!
     for entity in feed.entity:
         if entity.HasField('trip_update'):
             trip_update = entity.trip_update
@@ -93,7 +95,7 @@ def generate_realtime(target_route_id, target_stop_id):
 
     # isolate time from real_arrival_time
     real_arrival_time = real_arrival_time.time()
-
+    
     results_df = pd.DataFrame(
         {
             'route_id': [target_route_id],
@@ -107,9 +109,12 @@ def generate_realtime(target_route_id, target_stop_id):
             'current_date': [current_date]
         }
     )
+    
+    return results_df
 
+def generate_csv(results_df, filename):
     # Define the path to the results CSV file
-    results_csv = 'csv/rte_19.csv'
+    results_csv = filename
 
     # Check if the file exists
     if os.path.exists(results_csv):
