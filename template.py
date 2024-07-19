@@ -23,37 +23,55 @@ def time_diff(t1, t2):
     t2_seconds = t2.hour * 3600 + t2.minute * 60 + t2.second
     return abs(t1_seconds - t2_seconds)
 
+def find_closest_arrival(gtfs_filename, target_route_id, target_stop_id):
+    # Read the GTFS stop_times.txt file
+    stop_times_df = pd.read_csv(gtfs_filename)  # 'gtfs-static/stop_times.txt'
+
+    # Read the GTFS trips.txt file to filter by route_id
+    trips_df = pd.read_csv('gtfs-static/trips.txt')  # Adjust the path to your trips.txt file
+
+    # Ensure the stop_id column is treated as a string
+    stop_times_df['stop_id'] = stop_times_df['stop_id'].astype(str)
+
+    # Filter trips by route_id
+    filtered_trips_df = trips_df[trips_df['route_id'] == target_route_id]
+
+    # Merge stop_times with filtered trips to get the relevant rows
+    merged_df = pd.merge(stop_times_df, filtered_trips_df, on='trip_id')
+
+    # Further filter the merged DataFrame by stop_id
+    filtered_df = merged_df[merged_df['stop_id'] == target_stop_id].copy()
+
+    # Convert the arrival_time to datetime.time format
+    filtered_df['arrival_time'] = pd.to_datetime(filtered_df['arrival_time'], format='%H:%M:%S').dt.time
+
+    # Get the current time with hours, minutes, and seconds
+    current_time = datetime.now().strftime('%H:%M:%S')
+    current_time = datetime.strptime(current_time, '%H:%M:%S').time()
+
+    # Find the closest arrival time to the current time
+    filtered_df['time_diff'] = filtered_df['arrival_time'].apply(lambda x: time_diff(x, current_time))
+    closest_row = filtered_df.loc[filtered_df['time_diff'].idxmin()]
+
+    # Get the trip_id and arrival_time of the closest row
+    closest_trip_id = closest_row['trip_id']
+    closest_arrival_time = closest_row['arrival_time']
+    return closest_arrival_time
+
 # Define the specific route_id and stop_id to search for... this varname could be clearer
 # break up this function into smaller/simpler funcs
 def generate_realtime(target_route_id, target_stop_id):
     real_arrival_time = '99999'
     actual_trip_id = '99999'
 
-    # Find current trip_id that corresponds to stop_id
-    # Read the GTFS stop_times.txt file
-    stop_times_df = pd.read_csv('gtfs-static/stop_times.txt')
-
-    # Ensure the stop_id column is treated as a string
-    stop_times_df['stop_id'] = stop_times_df['stop_id'].astype(str)
-
-    # Filter the DataFrame for the given stop_id
-    filtered_df = stop_times_df.loc[stop_times_df['stop_id'] == target_stop_id].copy()
-
-    # Convert the arrival_time to datetime.time format
-    filtered_df.loc[:, 'arrival_time'] = pd.to_datetime(filtered_df['arrival_time'], format='%H:%M:%S').dt.time
+    # Get the trip_id and arrival_time of the closest row
+    closest_arrival_time = find_closest_arrival('gtfs-static/stop_times.txt', target_route_id, target_stop_id)
+    print(closest_arrival_time)
 
     # Get the current time with hours, minutes, and seconds
     current_time = datetime.now().strftime('%H:%M:%S')
     current_time = datetime.strptime(current_time, '%H:%M:%S').time()
     current_date = datetime.today().strftime('%Y-%m-%d')
-
-    # Find the closest arrival time to the current time
-    closest_row = filtered_df.iloc[(filtered_df['arrival_time'].apply(lambda x: time_diff(x, current_time))).argsort()[:1]]
-
-    # Get the trip_id and arrival_time of the closest row
-    closest_trip_id = closest_row['trip_id'].values[0]
-    closest_arrival_time = closest_row['arrival_time'].values[0]
-    print(closest_arrival_time)
 
     # Find & print what stop we're at 
     stops_df = pd.read_csv('gtfs-static/stops.txt')
