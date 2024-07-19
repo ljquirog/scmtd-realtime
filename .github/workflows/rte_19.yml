@@ -9,14 +9,8 @@ on:
   pull_request:
     branches: [ "main" ]
   schedule:
-    - cron: '13 22 * * *'  # 2:13 PM PST (10:13 PM UTC)
-    - cron: '28 22-23/1 * * *'  # Every 15 minutes between 10:28 PM and 11:28 PM UTC
-    - cron: '00 23 * * *'  # Every hour at the top of the hour from 11:00 PM UTC to 12:00 AM UTC
-    - cron: '15 23 * * *'  # 11:15 PM UTC
-    - cron: '30 23 * * *'  # 11:30 PM UTC
-    - cron: '00 0-7 * * *'  # Every hour on the hour from 12:00 AM UTC to 7:00 AM UTC
-    - cron: '15 0-7 * * *'  # Every 15 minutes from 12:15 AM to 7:15 AM UTC
-    - cron: '30 0-7 * * *'  # Every 15 minutes from 12:30 AM to 7:30 AM UTC
+    - cron: '23 14 * * *'  # 6:23 AM PST (2:23 PM UTC)
+    - cron: '53 14-23/1 * * *'  # Every 30 minutes from 2:53 PM to 11:23 PM UTC
 
 permissions:
   contents: write
@@ -46,7 +40,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics   
     - name: run main.py
       run: |
-        python3 ./main.py 19 1594 csv/rte_19.csv
+        python3 ./main.py 19 977 csv/rte_19.csv
     - name: commit changes
       run: |
         git config user.name "Lola Quiroga"
