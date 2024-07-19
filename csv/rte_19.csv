@@ -1,1 +1,2 @@
 route_id,trip_id,stop_id,stop_name,closest_arrival_time,real_arrival_time,diff_mins,current_time,current_date
+19,99999,977,Bay Dr & Nobel Dr,17:38:54,99999,99999,17:37:31,2024-07-19
