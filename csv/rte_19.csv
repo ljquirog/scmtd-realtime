@@ -73,3 +73,4 @@ route_id,trip_id,stop_id,stop_name,closest_arrival_time,real_arrival_time,diff_m
 19,112020,977,Bay Dr & Nobel Dr,21:54:47,21:58:37,3.83,21:55:23,2024-07-25
 19,829020,977,Bay Dr & Nobel Dr,22:52:47,23:01:04,8.28,22:55:38,2024-07-25
 19,703020,977,Bay Dr & Nobel Dr,23:52:47,00:02:01,1430.77,23:55:56,2024-07-25
+19,99999,977,Bay Dr & Nobel Dr,14:25:34,99999,99999,14:31:42,2024-07-26
