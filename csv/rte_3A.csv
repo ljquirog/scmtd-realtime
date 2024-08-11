@@ -256,3 +256,4 @@ route_id,trip_id,stop_id,stop_name,closest_arrival_time,real_arrival_time,diff_m
 3A,99999,1594,Front & Soquel Ave,16:51:00,99999,99999,16:54:52,2024-08-11
 3A,99999,1594,Front & Soquel Ave,17:51:00,99999,99999,17:54:55,2024-08-11
 3A,99999,1594,Front & Soquel Ave,18:48:00,99999,99999,18:54:55,2024-08-11
+3A,99999,1594,Front & Soquel Ave,19:48:00,99999,99999,19:54:36,2024-08-11
