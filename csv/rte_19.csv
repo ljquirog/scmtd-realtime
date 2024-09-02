@@ -501,3 +501,4 @@ route_id,trip_id,stop_id,stop_name,closest_arrival_time,real_arrival_time,diff_m
 19,99999,977,Bay Dr & Nobel Dr,19:53:47,99999,99999,19:55:40,2024-09-02
 19,99999,977,Bay Dr & Nobel Dr,20:54:47,99999,99999,20:55:36,2024-09-02
 19,99999,977,Bay Dr & Nobel Dr,21:54:47,99999,99999,21:55:29,2024-09-02
+19,99999,977,Bay Dr & Nobel Dr,22:52:47,99999,99999,22:55:30,2024-09-02
