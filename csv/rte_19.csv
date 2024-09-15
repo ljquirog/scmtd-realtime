@@ -640,3 +640,4 @@ route_id,trip_id,stop_id,stop_name,closest_arrival_time,real_arrival_time,diff_m
 19,99999,977,Bay Dr & Nobel Dr,15:55:34,99999,99999,15:55:43,2024-09-15
 19,99999,977,Bay Dr & Nobel Dr,16:56:21,99999,99999,16:55:25,2024-09-15
 19,99999,977,Bay Dr & Nobel Dr,17:55:34,99999,99999,17:55:29,2024-09-15
+19,1288100,977,Bay Dr & Nobel Dr,18:55:34,19:07:31,11.95,18:55:38,2024-09-15
