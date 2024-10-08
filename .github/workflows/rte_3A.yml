@@ -16,6 +16,7 @@ permissions:
   contents: write
 
 jobs:
+  if: false # disable workflow
   build:
 
     runs-on: ubuntu-latest

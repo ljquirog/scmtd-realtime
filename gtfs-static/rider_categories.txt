@@ -1,5 +1,0 @@
-rider_category_id,rider_category_name,min_age,max_age,eligibility_url
-adult,Adult (age 18 and over),18,,https://scmtd.com/en/fares/fares
-youth,Youth (through age 17),,17,https://scmtd.com/en/fares/fares
-senior,Older adults (at least 62 years of age),62,,https://scmtd.com/en/fares/discount-photo-id
-discount,People with Disabilities,,,https://scmtd.com/en/fares/discount-photo-id
